@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.SolutionsList = new System.Windows.Forms.ListBox();
+            this.GridPanel = new System.Windows.Forms.Panel();
             this.controlsPanel = new System.Windows.Forms.Panel();
             this.statusLabel = new System.Windows.Forms.Label();
             this.ClearButton = new System.Windows.Forms.Button();
@@ -39,8 +41,6 @@
             this.allow8DirCheck = new System.Windows.Forms.CheckBox();
             this.profileCombo = new System.Windows.Forms.ComboBox();
             this.profileLabel = new System.Windows.Forms.Label();
-            this.GridPanel = new System.Windows.Forms.Panel();
-            this.SolutionsList = new System.Windows.Forms.ListBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.controlsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.maxLengthInput)).BeginInit();
@@ -58,11 +58,34 @@
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 330F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 310F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(964, 483);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(964, 459);
             this.tableLayoutPanel1.TabIndex = 0;
+            // 
+            // SolutionsList
+            // 
+            this.SolutionsList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SolutionsList.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.SolutionsList.FormattingEnabled = true;
+            this.SolutionsList.ItemHeight = 21;
+            this.SolutionsList.Location = new System.Drawing.Point(373, 3);
+            this.SolutionsList.Name = "SolutionsList";
+            this.tableLayoutPanel1.SetRowSpan(this.SolutionsList, 2);
+            this.SolutionsList.Size = new System.Drawing.Size(588, 453);
+            this.SolutionsList.TabIndex = 5;
+            this.SolutionsList.SelectedIndexChanged += new System.EventHandler(this.SolutionsList_SelectedIndexChanged);
+            // 
+            // GridPanel
+            // 
+            this.GridPanel.BackColor = System.Drawing.Color.Black;
+            this.GridPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.GridPanel.Location = new System.Drawing.Point(3, 3);
+            this.GridPanel.Name = "GridPanel";
+            this.GridPanel.Size = new System.Drawing.Size(364, 304);
+            this.GridPanel.TabIndex = 4;
+            this.GridPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.GridPanel_Paint);
+            this.GridPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.GridPanel_MouseClick);
             // 
             // controlsPanel
             // 
@@ -76,9 +99,9 @@
             this.controlsPanel.Controls.Add(this.profileCombo);
             this.controlsPanel.Controls.Add(this.profileLabel);
             this.controlsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.controlsPanel.Location = new System.Drawing.Point(3, 333);
+            this.controlsPanel.Location = new System.Drawing.Point(3, 313);
             this.controlsPanel.Name = "controlsPanel";
-            this.controlsPanel.Size = new System.Drawing.Size(364, 147);
+            this.controlsPanel.Size = new System.Drawing.Size(364, 143);
             this.controlsPanel.TabIndex = 1;
             // 
             // statusLabel
@@ -181,34 +204,11 @@
             this.profileLabel.TabIndex = 0;
             this.profileLabel.Text = "配置:";
             // 
-            // GridPanel
-            // 
-            this.GridPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.GridPanel.Location = new System.Drawing.Point(3, 3);
-            this.GridPanel.Name = "GridPanel";
-            this.GridPanel.Size = new System.Drawing.Size(364, 324);
-            this.GridPanel.TabIndex = 4;
-            this.GridPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.GridPanel_Paint);
-            this.GridPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.GridPanel_MouseClick);
-            // 
-            // SolutionsList
-            // 
-            this.SolutionsList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SolutionsList.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.SolutionsList.FormattingEnabled = true;
-            this.SolutionsList.ItemHeight = 21;
-            this.SolutionsList.Location = new System.Drawing.Point(373, 3);
-            this.SolutionsList.Name = "SolutionsList";
-            this.tableLayoutPanel1.SetRowSpan(this.SolutionsList, 2);
-            this.SolutionsList.Size = new System.Drawing.Size(588, 477);
-            this.SolutionsList.TabIndex = 5;
-            this.SolutionsList.SelectedIndexChanged += new System.EventHandler(this.SolutionsList_SelectedIndexChanged);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(964, 483);
+            this.ClientSize = new System.Drawing.Size(964, 459);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "MainForm";
             this.Text = "Puzzle & Dragons 路徑優化器";
