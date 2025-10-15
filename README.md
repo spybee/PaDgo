@@ -1,6 +1,6 @@
 # PaDgo
 
-這是一個基於 [pndopt](https://github.com/kennytm/pndopt) 的 C# 改寫的學習版本。
+這是一個基於 [pndopt](https://github.com/kennytm/pndopt) 的 C# 改寫版本。
 
 本專案遵循 **GNU Affero General Public License v3.0 (AGPL-3.0)** 授權條款。
 這意味著：
