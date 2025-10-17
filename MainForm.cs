@@ -412,55 +412,6 @@ namespace PaDgo
             GridPanel.Invalidate();
         }
 
-        // 實時監控模式
-        static void RealTimeGameMonitoring()
-        {
-            // 假設你已經有遊戲窗口的句柄
-            IntPtr gameWindowHandle = GetPADWindowHandle();
-
-            if (gameWindowHandle != IntPtr.Zero)
-            {
-                var padDetector = new PADOrbDetector();
-                padDetector.StartRealTimeDetection(gameWindowHandle, 2000); // 每2秒檢測一次
-            }
-            else
-            {
-                Debug.Print("未找到P&D遊戲窗口");
-            }
-        }
-
-        // 訓練模式
-        static void TrainingModeExample()
-        {
-            Debug.Print("=== 寶珠識別訓練模式 ===");
-
-            // 訓練火珠
-            Debug.Print("請準備火珠的截圖...");
-            Console.ReadLine(); // 等待用戶準備
-
-            string fireOrbImage = @"C:\training\fire_orb.png";
-            if (File.Exists(fireOrbImage))
-            {
-                using (var bmp = new Bitmap(fireOrbImage))
-                {
-                    // 假設火珠在 (100, 100) 位置
-                    var trainingPoint = new Point(100, 100);
-                    TrainingMode.AddTrainingSampleFromUser(OrbType.Fire, bmp, trainingPoint);
-                }
-            }
-
-            // 可以繼續訓練其他類型的寶珠...
-            TrainingMode.FinishTraining();
-        }
-
-        // 輔助方法：獲取P&D窗口句柄（需要根據實際情況實現）
-        private static IntPtr GetPADWindowHandle()
-        {
-            // 這裡需要根據你的實際情況實現
-            // 例如通過窗口標題查找
-            return WindowHelper.FindWindow(null, "Puzzle & Dragons");
-        }
-
         private void ClearButton_Click(object sender, EventArgs e)
         {
             BoardManager.ClearBoard(); // 改用共用方法

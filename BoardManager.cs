@@ -12,6 +12,18 @@ namespace PaDgo
             Board = new int[5, 6];
         }
 
+        public static void RandomizeBoard()
+        {
+            var random = new Random();
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 0; j < 6; j++)
+                {
+                    Board[i, j] = random.Next(7);
+                }
+            }
+        }
+
         public static void ClearBoard()
         {
             for (int i = 0; i < 5; i++)
