@@ -34,7 +34,7 @@
             this.controlsPanel = new System.Windows.Forms.Panel();
             this.statusLabel = new System.Windows.Forms.Label();
             this.ClearButton = new System.Windows.Forms.Button();
-            this.RandomizeButton = new System.Windows.Forms.Button();
+            this.GetGameBoardButton = new System.Windows.Forms.Button();
             this.SolveButton = new System.Windows.Forms.Button();
             this.maxLengthInput = new System.Windows.Forms.NumericUpDown();
             this.lengthLabel = new System.Windows.Forms.Label();
@@ -60,7 +60,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 310F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(964, 459);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(618, 459);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // SolutionsList
@@ -72,7 +72,7 @@
             this.SolutionsList.Location = new System.Drawing.Point(373, 3);
             this.SolutionsList.Name = "SolutionsList";
             this.tableLayoutPanel1.SetRowSpan(this.SolutionsList, 2);
-            this.SolutionsList.Size = new System.Drawing.Size(588, 453);
+            this.SolutionsList.Size = new System.Drawing.Size(242, 453);
             this.SolutionsList.TabIndex = 5;
             this.SolutionsList.SelectedIndexChanged += new System.EventHandler(this.SolutionsList_SelectedIndexChanged);
             // 
@@ -91,7 +91,7 @@
             // 
             this.controlsPanel.Controls.Add(this.statusLabel);
             this.controlsPanel.Controls.Add(this.ClearButton);
-            this.controlsPanel.Controls.Add(this.RandomizeButton);
+            this.controlsPanel.Controls.Add(this.GetGameBoardButton);
             this.controlsPanel.Controls.Add(this.SolveButton);
             this.controlsPanel.Controls.Add(this.maxLengthInput);
             this.controlsPanel.Controls.Add(this.lengthLabel);
@@ -124,15 +124,15 @@
             this.ClearButton.UseVisualStyleBackColor = true;
             this.ClearButton.Click += new System.EventHandler(this.ClearButton_Click);
             // 
-            // RandomizeButton
+            // GetGameBoardButton
             // 
-            this.RandomizeButton.Location = new System.Drawing.Point(100, 85);
-            this.RandomizeButton.Name = "RandomizeButton";
-            this.RandomizeButton.Size = new System.Drawing.Size(80, 30);
-            this.RandomizeButton.TabIndex = 6;
-            this.RandomizeButton.Text = "隨機生成";
-            this.RandomizeButton.UseVisualStyleBackColor = true;
-            this.RandomizeButton.Click += new System.EventHandler(this.RandomizeButton_Click);
+            this.GetGameBoardButton.Location = new System.Drawing.Point(100, 85);
+            this.GetGameBoardButton.Name = "GetGameBoardButton";
+            this.GetGameBoardButton.Size = new System.Drawing.Size(80, 30);
+            this.GetGameBoardButton.TabIndex = 6;
+            this.GetGameBoardButton.Text = "取得現況";
+            this.GetGameBoardButton.UseVisualStyleBackColor = true;
+            this.GetGameBoardButton.Click += new System.EventHandler(this.GetGameBoardButton_Click);
             // 
             // SolveButton
             // 
@@ -208,10 +208,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(964, 459);
+            this.ClientSize = new System.Drawing.Size(618, 459);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "MainForm";
-            this.Text = "Puzzle & Dragons 路徑優化器";
+            this.Text = "P & D 0 自動化";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.controlsPanel.ResumeLayout(false);
             this.controlsPanel.PerformLayout();
@@ -230,7 +230,7 @@
         private System.Windows.Forms.Label lengthLabel;
         private System.Windows.Forms.NumericUpDown maxLengthInput;
         private System.Windows.Forms.Button SolveButton;
-        private System.Windows.Forms.Button RandomizeButton;
+        private System.Windows.Forms.Button GetGameBoardButton;
         private System.Windows.Forms.Button ClearButton;
         private System.Windows.Forms.Label statusLabel;
         private System.Windows.Forms.ListBox SolutionsList;

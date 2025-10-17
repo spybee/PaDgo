@@ -33,6 +33,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json.Encryption, Version=1.0.0.0, Culture=neutral, PublicKeyToken=816df355b41ce519, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.Encryption.2.2.0\lib\netstandard2.0\Newtonsoft.Json.Encryption.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,16 +52,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdvancedOrbRecognizer.cs" />
+    <Compile Include="BoardManager.cs" />
+    <Compile Include="ColorRangeTrainer.cs" />
     <Compile Include="DataStructure.cs" />
+    <Compile Include="FastPixelOperator.cs" />
+    <Compile Include="ImprovedOrbDetection.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="OrbColorDatabase.cs" />
+    <Compile Include="OrbRecognizer.cs" />
+    <Compile Include="PADOrbDetector.cs" />
     <Compile Include="PndOptimizer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RealTimeCalibrator.cs" />
+    <Compile Include="ScreenCapture.cs" />
+    <Compile Include="SimpleMLOrbClassifier.cs" />
+    <Compile Include="TrainingMode.cs" />
+    <Compile Include="WindowHelper.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -68,6 +87,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

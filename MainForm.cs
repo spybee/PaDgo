@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,30 +18,20 @@ namespace PaDgo
         private const int GRID_LEFT = 20;
         private const int GRID_TOP = 20;
 
-        private int[,] board = new int[5, 6];
+        // 移除 private int[,] board = new int[5, 6]; 改用共用的 BoardManager.Board
         private PndOptimizer optimizer = new PndOptimizer();
         private List<Solution> solutions = new List<Solution>();
         private List<Point> currentPath = new List<Point>();
-
-        //// 主要控件
-        //private Panel GridPanel;
-        //private ListBox solutionsList;
-        //private Button SolveButton;
-        //private Button randomizeButton;
-        //private Button clearButton;
-        //private ComboBox profileCombo;
-        //private CheckBox allow8DirCheck;
-        //private NumericUpDown maxLengthInput;
-        //private Label statusLabel;
 
         public MainForm()
         {
             InitializeComponent();
             //SetupUI();
             InitializeProfiles();
-            RandomizeBoard();
+            BoardManager.InitializeBoard(); // 改用共用盤面初始化
         }
 
+        // 其餘方法保持不變...
         private void InitializeProfiles()
         {
             var profiles = new List<string>
@@ -77,8 +69,8 @@ namespace PaDgo
                 case 3: return Brushes.Yellow;      // 淺色
                 case 4: return Brushes.Purple;      // 深色
                 case 5: return Brushes.Pink;        // 心形
-                case 6: return Brushes.White;       // 垃圾色
-                default: return Brushes.Gray;       // 未知
+                case 6: return Brushes.Gray;        // 垃圾色
+                default: return Brushes.White;      // 白色
             }
         }
 
@@ -115,11 +107,10 @@ namespace PaDgo
                 case 3: return "光";     // 光明
                 case 4: return "暗";     // 黑暗
                 case 5: return "心";     // 心形
-                case 6: return "廢";     // 垃圾
+                case 6: return "妨";     // 妨礙珠
                 default: return "?";     // 未知
             }
         }
-
 
         private void DrawPath(Graphics g, List<Point> path)
         {
@@ -180,7 +171,7 @@ namespace PaDgo
 
             var arrowBrush = new SolidBrush(Color.Red);
 
-            for (int i = 0; i < path.Count -1; i++)
+            for (int i = 0; i < path.Count - 1; i++)
             {
                 DrawArrow(g, arrowBrush, path[i], path[i + 1]);
             }
@@ -221,6 +212,7 @@ namespace PaDgo
             currentPath.Clear();
             GridPanel.Invalidate();
         }
+
         private OrbWeights[] GetCurrentWeights()
         {
             if (profileCombo.SelectedItem == null)
@@ -254,11 +246,11 @@ namespace PaDgo
                 {
                  new OrbWeights(weights[0], weights[1]),    // 火 (0)
                  new OrbWeights(weights[2], weights[3]),    // 水 (1)
-                 new OrbWeights(weights[4], weights[5]),    // 木頭 (2)
+                 new OrbWeights(weights[4], weights[5]),    // 木 (2)
                  new OrbWeights(weights[6], weights[7]),    // 光 (3)
                  new OrbWeights(weights[8], weights[9]),    // 暗 (4)
                  new OrbWeights(weights[10], weights[11]),  // 心 (5)
-                 new OrbWeights(weights[12], weights[13])   // 廢 (6)
+                 new OrbWeights(weights[12], weights[13])   // 妨 (6)
                 };
             }
 
@@ -275,7 +267,7 @@ namespace PaDgo
             new OrbWeights(1, 3),     // 光
             new OrbWeights(1, 3),     // 暗
             new OrbWeights(0.3, 0.3), // 心
-            new OrbWeights(0.1, 0.1)  // 廢
+            new OrbWeights(0.1, 0.1)  // 妨
             };
         }
 
@@ -298,7 +290,7 @@ namespace PaDgo
                 try
                 {
                     var result = await Task.Run(() =>
-                    optimizer.Solve(board, weights, (int)maxLengthInput.Value, allow8DirCheck.Checked)
+                    optimizer.Solve(BoardManager.Board, weights, (int)maxLengthInput.Value, allow8DirCheck.Checked)
                     );
 
                     solutions = result;
@@ -344,7 +336,6 @@ namespace PaDgo
             SolutionsList.EndUpdate();
         }
 
-
         private Point GetOrbCenter(int row, int col)
         {
             return new Point(
@@ -353,34 +344,126 @@ namespace PaDgo
             );
         }
 
-        private void RandomizeButton_Click(object sender, EventArgs e)
+        private void GetGameBoardButton_Click(object sender, EventArgs e)
         {
-            RandomizeBoard();
+            //BoardManager.RandomizeBoard(); // 改用共用方法
+
+            solutions.Clear();
+            SolutionsList.Items.Clear();
+            ClearPath();
+
+            // 查找所有PUZZLE & DRAGONS 0 - 窗口
+            var allPD0Windows = WindowHelper.FindWindowsWithTitle("PUZZLE & DRAGONS 0 - ");
+
+            foreach (var PD0Window in allPD0Windows)
+            {
+                // 查找 PUZZLE & DRAGONS 0 顯示窗口
+                IntPtr displayWindow = ScreenCapture.FindDisplayWindow(PD0Window);
+
+                if (displayWindow != IntPtr.Zero)
+                {
+                    // 獲取窗口進程ID
+                    _ = WindowHelper.GetWindowThreadProcessId(PD0Window, out uint processId);
+
+                    // 從設置中獲取對應的PngPath
+                    string pngPath = "R:\\Temp\\";
+
+                    // 確保目錄存在
+                    if (!Directory.Exists(pngPath))
+                    {
+                        try
+                        {
+                            Directory.CreateDirectory(pngPath);
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.Print($"創建目錄失敗: {pngPath}, 錯誤: {ex.Message}");
+                            continue;
+                        }
+                    }
+
+                    string fileName = $"screenshot.png";
+                    string filePath = Path.Combine(pngPath, fileName);
+
+                    if (ScreenCapture.CaptureWithTopMostAndCopy(PD0Window, displayWindow, filePath))
+                    {
+                        ScreenCapture.DebugWindowInfo(displayWindow);
+                        Debug.Print($"截圖成功: {fileName}，路徑: {pngPath}");
+                    }
+                    else
+                    {
+                        Debug.Print($"截圖失敗...");
+                    }
+
+                    var detector = new ImprovedOrbDetection();
+
+                    if (File.Exists(filePath))
+                    {
+                        detector.DetectOrbsWithImprovements(filePath);
+                    }
+                    else
+                    {
+                        Debug.Print($"圖片不存在: {filePath}");
+                    }
+                }
+            }
+
             ClearPath();
             GridPanel.Invalidate();
         }
 
-        private void RandomizeBoard()
+        // 實時監控模式
+        static void RealTimeGameMonitoring()
         {
-            var random = new Random();
-            for (int i = 0; i < 5; i++)
+            // 假設你已經有遊戲窗口的句柄
+            IntPtr gameWindowHandle = GetPADWindowHandle();
+
+            if (gameWindowHandle != IntPtr.Zero)
             {
-                for (int j = 0; j < 6; j++)
+                var padDetector = new PADOrbDetector();
+                padDetector.StartRealTimeDetection(gameWindowHandle, 2000); // 每2秒檢測一次
+            }
+            else
+            {
+                Debug.Print("未找到P&D遊戲窗口");
+            }
+        }
+
+        // 訓練模式
+        static void TrainingModeExample()
+        {
+            Debug.Print("=== 寶珠識別訓練模式 ===");
+
+            // 訓練火珠
+            Debug.Print("請準備火珠的截圖...");
+            Console.ReadLine(); // 等待用戶準備
+
+            string fireOrbImage = @"C:\training\fire_orb.png";
+            if (File.Exists(fireOrbImage))
+            {
+                using (var bmp = new Bitmap(fireOrbImage))
                 {
-                    board[i, j] = random.Next(7);
+                    // 假設火珠在 (100, 100) 位置
+                    var trainingPoint = new Point(100, 100);
+                    TrainingMode.AddTrainingSampleFromUser(OrbType.Fire, bmp, trainingPoint);
                 }
             }
+
+            // 可以繼續訓練其他類型的寶珠...
+            TrainingMode.FinishTraining();
+        }
+
+        // 輔助方法：獲取P&D窗口句柄（需要根據實際情況實現）
+        private static IntPtr GetPADWindowHandle()
+        {
+            // 這裡需要根據你的實際情況實現
+            // 例如通過窗口標題查找
+            return WindowHelper.FindWindow(null, "Puzzle & Dragons");
         }
 
         private void ClearButton_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < 5; i++)
-            {
-                for (int j = 0; j < 6; j++)
-                {
-                    board[i, j] = 0; // 全部設為火珠
-                }
-            }
+            BoardManager.ClearBoard(); // 改用共用方法
             ClearPath();
             GridPanel.Invalidate();
         }
@@ -396,7 +479,7 @@ namespace PaDgo
             {
                 for (int col = 0; col < 6; col++)
                 {
-                    DrawOrb(g, row, col, board[row, col]);
+                    DrawOrb(g, row, col, BoardManager.Board[row, col]); // 改用共用盤面
                 }
             }
 
@@ -416,11 +499,11 @@ namespace PaDgo
             {
                 if (e.Button == MouseButtons.Left)
                 {
-                    board[row, col] = (board[row, col] + 1) % 7;
+                    BoardManager.Board[row, col] = (BoardManager.Board[row, col] + 1) % 7; // 改用共用盤面
                 }
                 else if (e.Button == MouseButtons.Right)
                 {
-                    board[row, col] = (board[row, col] + 6) % 7; // 反向循环
+                    BoardManager.Board[row, col] = (BoardManager.Board[row, col] + 6) % 7; // 反向循环，改用共用盤面
                 }
 
                 ClearPath();
