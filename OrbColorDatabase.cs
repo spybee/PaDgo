@@ -16,6 +16,7 @@ namespace PaDgo
         Dark,       // 暗
         Heart,      // 心
         Jammer,     // 妨礙
+        Poison,     // 毒
         Unknown     // 未知
     }
 

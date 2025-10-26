@@ -11,9 +11,9 @@ namespace PaDgo
         private const int ROWS = 5;
         private const int COLS = 6;
         private const int TYPES = 7;
-        private const double MULTI_ORB_BONUS = 0.25;
-        private const double COMBO_BONUS = 0.25;
-        private const int MAX_SOLUTIONS_COUNT = ROWS * COLS * 8 * 2;
+        private const double MULTI_ORB_BONUS = 0.35;
+        private const double COMBO_BONUS = 0.35;
+        private const int MAX_SOLUTIONS_COUNT = ROWS * COLS * 20;
 
         public int[,] CreateEmptyBoard()
         {

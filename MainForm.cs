@@ -31,9 +31,9 @@ namespace PaDgo
             //SetupUI();
             InitializeProfiles();
             BoardManager.InitializeBoard(); // 改用共用盤面初始化
+            ClearButton_Click(null, null);
         }
 
-        // 其餘方法保持不變...
         private void InitializeProfiles()
         {
             var profiles = new List<string>
@@ -72,6 +72,7 @@ namespace PaDgo
                 case 4: return Brushes.Purple;      // 深色
                 case 5: return Brushes.Pink;        // 心形
                 case 6: return Brushes.Gray;        // 垃圾色
+                case 7: return Brushes.Purple;      // 毒珠
                 default: return Brushes.White;      // 白色
             }
         }
@@ -110,6 +111,7 @@ namespace PaDgo
                 case 4: return "暗";     // 黑暗
                 case 5: return "心";     // 心形
                 case 6: return "妨";     // 妨礙珠
+                case 7: return "毒";     // 毒珠
                 default: return "?";     // 未知
             }
         }
@@ -225,20 +227,20 @@ namespace PaDgo
             // 配置資料映射
             var profileData = new Dictionary<string, double[]>
             {
-             { "5色隊伍 (多目標)", new double[] { 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 0.3, 0.3, 0.1, 0.1 } },
-             { "5色隊伍 (單目標)", new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.3, 0.3, 0.1, 0.1 } },
-             { "回覆隊伍", new double[] { 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 1, 1, 0.1, 0.1 } },
-             { "回覆隊伍 (多目標)", new double[] { 0.1, 0.3, 0.1, 0.3, 0.1, 0.3, 0.1, 0.3, 0.1, 0.3, 1, 1, 0.1, 0.1 } },
-             { "火隊 (多目標)", new double[] { 1, 3, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.3, 0.3, 0.1, 0.1 } },
-             { "火隊 (單目標)", new double[] { 1, 1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.3, 0.3, 0.1, 0.1 } },
-             { "水隊 (多目標)", new double[] { 0.1, 0.1, 1, 3, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.3, 0.3, 0.1, 0.1 } },
-             { "水隊 (單目標)", new double[] { 0.1, 0.1, 1, 1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.3, 0.3, 0.1, 0.1 } },
-             { "木隊 (多目標)", new double[] { 0.1, 0.1, 0.1, 0.1, 1, 3, 0.1, 0.1, 0.1, 0.1, 0.3, 0.3, 0.1, 0.1 } },
-             { "木隊 (單目標)", new double[] { 0.1, 0.1, 0.1, 0.1, 1, 1, 0.1, 0.1, 0.1, 0.1, 0.3, 0.3, 0.1, 0.1 } },
-             { "光隊 (多目標)", new double[] { 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 1, 3, 0.1, 0.1, 0.3, 0.3, 0.1, 0.1 } },
-             { "光隊 (單目標)", new double[] { 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 1, 1, 0.1, 0.1, 0.3, 0.3, 0.1, 0.1 } },
-             { "暗隊 (多目標)", new double[] { 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 1, 3, 0.3, 0.3, 0.1, 0.1 } },
-             { "暗隊 (單目標)", new double[] { 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 1, 1, 0.3, 0.3, 0.1, 0.1 } }
+             { "5色隊伍 (多目標)", new double[] { 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 0.3, 0.3, 0.1, 0.1, 0.1, 0.1 } },
+             { "5色隊伍 (單目標)", new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.3, 0.3, 0.1, 0.1, 0.1, 0.1 } },
+             { "回覆隊伍", new double[] { 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 1, 1, 0.1, 0.1, 0.1, 0.1 } },
+             { "回覆隊伍 (多目標)", new double[] { 0.1, 0.3, 0.1, 0.3, 0.1, 0.3, 0.1, 0.3, 0.1, 0.3, 1, 1, 0.1, 0.1, 0.1, 0.1 } },
+             { "火隊 (多目標)", new double[] { 1, 3, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.3, 0.3, 0.1, 0.1, 0.1, 0.1 } },
+             { "火隊 (單目標)", new double[] { 1, 1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.3, 0.3, 0.1, 0.1, 0.1, 0.1 } },
+             { "水隊 (多目標)", new double[] { 0.1, 0.1, 1, 3, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.3, 0.3, 0.1, 0.1, 0.1, 0.1 } },
+             { "水隊 (單目標)", new double[] { 0.1, 0.1, 1, 1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.3, 0.3, 0.1, 0.1, 0.1, 0.1 } },
+             { "木隊 (多目標)", new double[] { 0.1, 0.1, 0.1, 0.1, 1, 3, 0.1, 0.1, 0.1, 0.1, 0.3, 0.3, 0.1, 0.1, 0.1, 0.1 } },
+             { "木隊 (單目標)", new double[] { 0.1, 0.1, 0.1, 0.1, 1, 1, 0.1, 0.1, 0.1, 0.1, 0.3, 0.3, 0.1, 0.1, 0.1, 0.1 } },
+             { "光隊 (多目標)", new double[] { 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 1, 3, 0.1, 0.1, 0.3, 0.3, 0.1, 0.1, 0.1, 0.1 } },
+             { "光隊 (單目標)", new double[] { 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 1, 1, 0.1, 0.1, 0.3, 0.3, 0.1, 0.1, 0.1, 0.1 } },
+             { "暗隊 (多目標)", new double[] { 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 1, 3, 0.3, 0.3, 0.1, 0.1, 0.1, 0.1 } },
+             { "暗隊 (單目標)", new double[] { 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 1, 1, 0.3, 0.3, 0.1, 0.1, 0.1, 0.1 } }
             };
 
             if (profileData.ContainsKey(selectedProfile))
@@ -252,7 +254,8 @@ namespace PaDgo
                  new OrbWeights(weights[6], weights[7]),    // 光 (3)
                  new OrbWeights(weights[8], weights[9]),    // 暗 (4)
                  new OrbWeights(weights[10], weights[11]),  // 心 (5)
-                 new OrbWeights(weights[12], weights[13])   // 妨 (6)
+                 new OrbWeights(weights[12], weights[13]),  // 妨 (6)
+                 new OrbWeights(weights[14], weights[15])   // 毒 (7)
                 };
             }
 
@@ -269,7 +272,8 @@ namespace PaDgo
             new OrbWeights(1, 3),     // 光
             new OrbWeights(1, 3),     // 暗
             new OrbWeights(0.3, 0.3), // 心
-            new OrbWeights(0.1, 0.1)  // 妨
+            new OrbWeights(0.1, 0.1), // 妨
+            new OrbWeights(0.1, 0.1)  // 毒
             };
         }
 
@@ -453,11 +457,11 @@ namespace PaDgo
             {
                 if (e.Button == MouseButtons.Left)
                 {
-                    BoardManager.Board[row, col] = (BoardManager.Board[row, col] + 1) % 7; // 改用共用盤面
+                    BoardManager.Board[row, col] = (BoardManager.Board[row, col] + 1) % 8; // 改用共用盤面
                 }
                 else if (e.Button == MouseButtons.Right)
                 {
-                    BoardManager.Board[row, col] = (BoardManager.Board[row, col] + 6) % 7; // 反向循环，改用共用盤面
+                    BoardManager.Board[row, col] = (BoardManager.Board[row, col] + 7) % 8; // 反向循环，改用共用盤面
                 }
 
                 ClearPath();
@@ -491,17 +495,82 @@ namespace PaDgo
             return points;
         }
 
-        private void ButtonTest_Click(object sender, EventArgs e)
+        private void ExecutePathButton_Click(object sender, EventArgs e)
         {
-            var options = new AdvancedHwndMouseSimulator.DragOptions
+            if (SolutionsList.SelectedIndex < 0)
             {
-                Duration = 1000,
-                Steps = 100,
-                UseMessages = true
-            };
+                MessageBox.Show("請先選擇一個解決方案", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-            AdvancedHwndMouseSimulator.DragInWindow(PD0WindowsHwnd,
-                new Point(525, 154), new Point(835, 154), options);
+            if (PD0WindowsHwnd == IntPtr.Zero)
+            {
+                MessageBox.Show("未找到遊戲窗口，請先獲取遊戲盤面", "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            try
+            {
+                var solution = solutions[SolutionsList.SelectedIndex];
+                var pathPoints = ConvertSolutionToPoints(solution);
+
+                if (pathPoints.Count < 2)
+                {
+                    MessageBox.Show("路徑點不足", "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // 更新UI顯示正在執行
+                statusLabel.Text = "執行路徑中...";
+                statusLabel.ForeColor = Color.Orange;
+                ExecutePathButton.Enabled = false;
+                Application.DoEvents();
+
+                // 執行路徑
+                var options = new AdvancedHwndMouseSimulator.PathOptions
+                {
+                    Duration = 800,
+                    StepsPerSegment = 25
+                };
+
+                AdvancedHwndMouseSimulator.ExecutePathInWindow(PD0WindowsHwnd, pathPoints, options);
+
+                // 恢復UI狀態
+                statusLabel.Text = "路徑執行完成";
+                statusLabel.ForeColor = Color.Green;
+                ExecutePathButton.Enabled = true;
+
+                solutions.Clear();
+                SolutionsList.Items.Clear();
+                ClearPath();
+                //MessageBox.Show("路徑執行完成!", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                statusLabel.Text = $"執行失敗: {ex.Message}";
+                statusLabel.ForeColor = Color.Red;
+                ExecutePathButton.Enabled = true;
+
+                MessageBox.Show($"執行路徑時發生錯誤: {ex.Message}", "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private List<Point> ConvertSolutionToPoints(Solution solution)
+        {
+            var points = new List<Point>();
+            var current = solution.InitCursor;
+
+            // 添加起始點
+            points.Add(ImprovedOrbDetection.GetOrbPoint(current.Row, current.Col));
+
+            // 根據路徑方向添加後續點
+            foreach (var dir in solution.Path)
+            {
+                current = optimizer.MovePosition(current, dir);
+                points.Add(ImprovedOrbDetection.GetOrbPoint(current.Row, current.Col));
+            }
+
+            return points;
         }
     }
 }

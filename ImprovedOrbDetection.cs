@@ -14,19 +14,26 @@ namespace PaDgo
             {
                 var points = new List<Point>
                 {
-                        // 1280 x 720 分辨率下的珠子中心點
+                    // 1280 x 720 分辨率下的珠子中心點
                     //new Point(758, 222), new Point(847, 222), new Point(936, 222), new Point(1025, 222), new Point(1114, 222), new Point(1203, 222),
                     //new Point(758, 311), new Point(847, 311), new Point(936, 311), new Point(1025, 311), new Point(1114, 311), new Point(1203, 311),
                     //new Point(758, 400), new Point(847, 400), new Point(936, 400), new Point(1025, 400), new Point(1114, 400), new Point(1203, 400),
                     //new Point(758, 489), new Point(847, 489), new Point(936, 489), new Point(1025, 489), new Point(1114, 489), new Point(1203, 489),
                     //new Point(758, 578), new Point(847, 578), new Point(936, 578), new Point(1025, 578), new Point(1114, 578), new Point(1203, 578)
-                
-                        // 888 x 500 分辨率下的珠子中心點
+
+                    // 888 x 500 分辨率下的珠子中心點
                     new Point(525, 154), new Point(587, 154), new Point(649, 154), new Point(711, 154), new Point(773, 154), new Point(835, 154),
                     new Point(525, 216), new Point(587, 216), new Point(649, 216), new Point(711, 216), new Point(773, 216), new Point(835, 216),
-                    new Point(525, 278), new Point(587, 278), new Point(649, 278), new Point(711, 278), new Point(773, 278), new Point(835, 278),
+                    new Point(525, 277), new Point(587, 277), new Point(649, 277), new Point(711, 277), new Point(773, 277), new Point(835, 277),
                     new Point(525, 340), new Point(587, 340), new Point(649, 340), new Point(711, 340), new Point(773, 340), new Point(835, 340),
                     new Point(525, 402), new Point(587, 402), new Point(649, 402), new Point(711, 402), new Point(773, 402), new Point(835, 402)
+
+                    // 1333 x 750 分辨率下的珠子中心點
+                    //new Point(789, 233), new Point(882, 233), new Point(975, 233), new Point(1068, 233), new Point(1161, 233), new Point(1254, 233),
+                    //new Point(789, 326), new Point(882, 326), new Point(975, 326), new Point(1068, 326), new Point(1161, 326), new Point(1254, 326),
+                    //new Point(789, 419), new Point(882, 419), new Point(975, 419), new Point(1068, 419), new Point(1161, 419), new Point(1254, 419),
+                    //new Point(789, 512), new Point(882, 512), new Point(975, 512), new Point(1068, 512), new Point(1161, 512), new Point(1254, 512),
+                    //new Point(789, 605), new Point(882, 605), new Point(975, 605), new Point(1068, 605), new Point(1161, 605), new Point(1254, 605)
                 };
 
                 Debug.Print("=== 寶珠識別 ===");
@@ -84,7 +91,7 @@ namespace PaDgo
                 }
             },
             
-            // 水珠
+            // 水珠 82,116,233
             new OrbColorProfile
             {
                 Type = OrbType.Water,
@@ -92,8 +99,8 @@ namespace PaDgo
                 PrimaryColor = Color.FromArgb(105, 137, 239),
                 ColorRange = new ColorRange
                 {
-                    RMin = 90, RMax = 120,
-                    GMin = 120, GMax = 150,
+                    RMin = 78, RMax = 120,
+                    GMin = 113, GMax = 150,
                     BMin = 220, BMax = 255
                 }
             },
@@ -126,7 +133,7 @@ namespace PaDgo
                 }
             },
             
-            // 光珠 251,249,89
+            // 光珠 247,245,54
             new OrbColorProfile
             {
                 Type = OrbType.Light,
@@ -134,13 +141,13 @@ namespace PaDgo
                 PrimaryColor = Color.FromArgb(249, 246, 61),
                 ColorRange = new ColorRange
                 {
-                    RMin = 248, RMax = 252,
+                    RMin = 246, RMax = 252,
                     GMin = 244, GMax = 250,
                     BMin = 52, BMax = 90
                 }
             },
             
-            // 暗珠 184,59,161
+            // 暗珠 152,52,133
             new OrbColorProfile
             {
                 Type = OrbType.Dark,
@@ -149,12 +156,12 @@ namespace PaDgo
                 ColorRange = new ColorRange
                 {
                     RMin = 80, RMax = 185,
-                    GMin = 53, GMax = 110,
+                    GMin = 51, GMax = 110,
                     BMin = 120, BMax = 190
                 }
             },
             
-            // 妨礙珠 78,119,133
+            // 妨礙珠 77,115,127
             new OrbColorProfile
             {
                 Type = OrbType.Jammer,
@@ -162,11 +169,26 @@ namespace PaDgo
                 PrimaryColor = Color.FromArgb(81, 117, 128),
                 ColorRange = new ColorRange
                 {
-                    RMin = 77, RMax = 82,
-                    GMin = 116, GMax = 120,
-                    BMin = 127, BMax = 134
+                    RMin = 75, RMax = 87,
+                    GMin = 110, GMax = 120,
+                    BMin = 121, BMax = 134
+                }
+            },
+
+            // 毒珠 152,150,157
+            new OrbColorProfile
+            {
+                Type = OrbType.Poison, // 確保有一個 OrbType.Poison 枚舉值
+                Name = "毒珠",
+                PrimaryColor = Color.FromArgb(153,150,159),
+                ColorRange = new ColorRange
+                {
+                    RMin = 150, RMax = 157,
+                    GMin = 142, GMax = 154,
+                    BMin = 155, BMax = 162
                 }
             }
+
         };
         }
 
@@ -237,7 +259,7 @@ namespace PaDgo
         {
             { OrbType.Fire, '火' }, { OrbType.Water, '水' }, { OrbType.Wood, '木' },
             { OrbType.Light, '光' }, { OrbType.Dark, '暗' }, { OrbType.Heart, '心' },
-            { OrbType.Jammer, '妨' }, { OrbType.Unknown, '?' }
+            { OrbType.Jammer, '妨' }, { OrbType.Poison, '毒' }, { OrbType.Unknown, '?' }
         };
 
             for (int row = 0; row < 5; row++)
@@ -262,6 +284,31 @@ namespace PaDgo
             {
                 Debug.Print($"{stat.Type}: {stat.Count}個 (平均置信度: {stat.AvgConfidence:P0})");
             }
+        }
+
+        // 在 ImprovedOrbDetection.cs 中添加
+        public static List<Point> GetOrbPoints()
+        {
+            // 返回 888 x 500 分辨率下的珠子中心點
+            return new List<Point>
+                {
+                    new Point(525, 154), new Point(587, 154), new Point(649, 154), new Point(711, 154), new Point(773, 154), new Point(835, 154),
+                    new Point(525, 216), new Point(587, 216), new Point(649, 216), new Point(711, 216), new Point(773, 216), new Point(835, 216),
+                    new Point(525, 277), new Point(587, 277), new Point(649, 277), new Point(711, 277), new Point(773, 277), new Point(835, 277),
+                    new Point(525, 340), new Point(587, 340), new Point(649, 340), new Point(711, 340), new Point(773, 340), new Point(835, 340),
+                    new Point(525, 402), new Point(587, 402), new Point(649, 402), new Point(711, 402), new Point(773, 402), new Point(835, 402)
+                };
+        }
+
+        public static Point GetOrbPoint(int row, int col)
+        {
+            var points = GetOrbPoints();
+            int index = row * 6 + col; // 6列，行優先排序
+            if (index >= 0 && index < points.Count)
+            {
+                return points[index];
+            }
+            throw new ArgumentException($"無效的行列座標: row={row}, col={col}");
         }
     }
 }

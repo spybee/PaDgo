@@ -32,6 +32,7 @@
             this.SolutionsList = new System.Windows.Forms.ListBox();
             this.GridPanel = new System.Windows.Forms.Panel();
             this.controlsPanel = new System.Windows.Forms.Panel();
+            this.ExecutePathButton = new System.Windows.Forms.Button();
             this.statusLabel = new System.Windows.Forms.Label();
             this.ClearButton = new System.Windows.Forms.Button();
             this.GetGameBoardButton = new System.Windows.Forms.Button();
@@ -41,7 +42,6 @@
             this.allow8DirCheck = new System.Windows.Forms.CheckBox();
             this.profileCombo = new System.Windows.Forms.ComboBox();
             this.profileLabel = new System.Windows.Forms.Label();
-            this.ButtonTest = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.controlsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.maxLengthInput)).BeginInit();
@@ -90,7 +90,7 @@
             // 
             // controlsPanel
             // 
-            this.controlsPanel.Controls.Add(this.ButtonTest);
+            this.controlsPanel.Controls.Add(this.ExecutePathButton);
             this.controlsPanel.Controls.Add(this.statusLabel);
             this.controlsPanel.Controls.Add(this.ClearButton);
             this.controlsPanel.Controls.Add(this.GetGameBoardButton);
@@ -106,6 +106,16 @@
             this.controlsPanel.Size = new System.Drawing.Size(364, 143);
             this.controlsPanel.TabIndex = 1;
             // 
+            // ExecutePathButton
+            // 
+            this.ExecutePathButton.Location = new System.Drawing.Point(270, 85);
+            this.ExecutePathButton.Name = "ExecutePathButton";
+            this.ExecutePathButton.Size = new System.Drawing.Size(85, 30);
+            this.ExecutePathButton.TabIndex = 10;
+            this.ExecutePathButton.Text = "執行路徑";
+            this.ExecutePathButton.UseVisualStyleBackColor = true;
+            this.ExecutePathButton.Click += new System.EventHandler(this.ExecutePathButton_Click);
+            // 
             // statusLabel
             // 
             this.statusLabel.AutoSize = true;
@@ -118,7 +128,7 @@
             // 
             // ClearButton
             // 
-            this.ClearButton.Location = new System.Drawing.Point(190, 85);
+            this.ClearButton.Location = new System.Drawing.Point(183, 85);
             this.ClearButton.Name = "ClearButton";
             this.ClearButton.Size = new System.Drawing.Size(80, 30);
             this.ClearButton.TabIndex = 7;
@@ -128,7 +138,7 @@
             // 
             // GetGameBoardButton
             // 
-            this.GetGameBoardButton.Location = new System.Drawing.Point(100, 85);
+            this.GetGameBoardButton.Location = new System.Drawing.Point(96, 85);
             this.GetGameBoardButton.Name = "GetGameBoardButton";
             this.GetGameBoardButton.Size = new System.Drawing.Size(80, 30);
             this.GetGameBoardButton.TabIndex = 6;
@@ -194,7 +204,7 @@
             this.profileCombo.FormattingEnabled = true;
             this.profileCombo.Location = new System.Drawing.Point(50, 8);
             this.profileCombo.Name = "profileCombo";
-            this.profileCombo.Size = new System.Drawing.Size(200, 20);
+            this.profileCombo.Size = new System.Drawing.Size(304, 20);
             this.profileCombo.TabIndex = 1;
             // 
             // profileLabel
@@ -205,16 +215,6 @@
             this.profileLabel.Size = new System.Drawing.Size(32, 12);
             this.profileLabel.TabIndex = 0;
             this.profileLabel.Text = "配置:";
-            // 
-            // ButtonTest
-            // 
-            this.ButtonTest.Location = new System.Drawing.Point(281, 85);
-            this.ButtonTest.Name = "ButtonTest";
-            this.ButtonTest.Size = new System.Drawing.Size(80, 30);
-            this.ButtonTest.TabIndex = 9;
-            this.ButtonTest.Text = "Test";
-            this.ButtonTest.UseVisualStyleBackColor = true;
-            this.ButtonTest.Click += new System.EventHandler(this.ButtonTest_Click);
             // 
             // MainForm
             // 
@@ -247,7 +247,7 @@
         private System.Windows.Forms.Label statusLabel;
         private System.Windows.Forms.ListBox SolutionsList;
         private System.Windows.Forms.Panel GridPanel;
-        private System.Windows.Forms.Button ButtonTest;
+        private System.Windows.Forms.Button ExecutePathButton;
     }
 }
 

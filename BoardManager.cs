@@ -30,7 +30,7 @@ namespace PaDgo
             {
                 for (int j = 0; j < 6; j++)
                 {
-                    Board[i, j] = 0; // 全部設為火珠
+                    Board[i, j] = 8; // 全部設為?珠
                 }
             }
         }
