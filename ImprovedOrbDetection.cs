@@ -15,18 +15,18 @@ namespace PaDgo
                 var points = new List<Point>
                 {
                     // 1280 x 720 分辨率下的珠子中心點
-                    //new Point(758, 222), new Point(847, 222), new Point(936, 222), new Point(1025, 222), new Point(1114, 222), new Point(1203, 222),
-                    //new Point(758, 311), new Point(847, 311), new Point(936, 311), new Point(1025, 311), new Point(1114, 311), new Point(1203, 311),
-                    //new Point(758, 400), new Point(847, 400), new Point(936, 400), new Point(1025, 400), new Point(1114, 400), new Point(1203, 400),
-                    //new Point(758, 489), new Point(847, 489), new Point(936, 489), new Point(1025, 489), new Point(1114, 489), new Point(1203, 489),
-                    //new Point(758, 578), new Point(847, 578), new Point(936, 578), new Point(1025, 578), new Point(1114, 578), new Point(1203, 578)
+                    new Point(758, 222), new Point(847, 222), new Point(936, 222), new Point(1025, 222), new Point(1114, 222), new Point(1203, 222),
+                    new Point(758, 311), new Point(847, 311), new Point(936, 311), new Point(1025, 311), new Point(1114, 311), new Point(1203, 311),
+                    new Point(758, 400), new Point(847, 400), new Point(936, 400), new Point(1025, 400), new Point(1114, 400), new Point(1203, 400),
+                    new Point(758, 489), new Point(847, 489), new Point(936, 489), new Point(1025, 489), new Point(1114, 489), new Point(1203, 489),
+                    new Point(758, 578), new Point(847, 578), new Point(936, 578), new Point(1025, 578), new Point(1114, 578), new Point(1203, 578)
 
                     // 888 x 500 分辨率下的珠子中心點
-                    new Point(525, 154), new Point(587, 154), new Point(649, 154), new Point(711, 154), new Point(773, 154), new Point(835, 154),
-                    new Point(525, 216), new Point(587, 216), new Point(649, 216), new Point(711, 216), new Point(773, 216), new Point(835, 216),
-                    new Point(525, 277), new Point(587, 277), new Point(649, 277), new Point(711, 277), new Point(773, 277), new Point(835, 277),
-                    new Point(525, 340), new Point(587, 340), new Point(649, 340), new Point(711, 340), new Point(773, 340), new Point(835, 340),
-                    new Point(525, 402), new Point(587, 402), new Point(649, 402), new Point(711, 402), new Point(773, 402), new Point(835, 402)
+                    //new Point(525, 154), new Point(587, 154), new Point(649, 154), new Point(711, 154), new Point(773, 154), new Point(835, 154),
+                    //new Point(525, 216), new Point(587, 216), new Point(649, 216), new Point(711, 216), new Point(773, 216), new Point(835, 216),
+                    //new Point(525, 277), new Point(587, 277), new Point(649, 277), new Point(711, 277), new Point(773, 277), new Point(835, 277),
+                    //new Point(525, 340), new Point(587, 340), new Point(649, 340), new Point(711, 340), new Point(773, 340), new Point(835, 340),
+                    //new Point(525, 402), new Point(587, 402), new Point(649, 402), new Point(711, 402), new Point(773, 402), new Point(835, 402)
 
                     // 1333 x 750 分辨率下的珠子中心點
                     //new Point(789, 233), new Point(882, 233), new Point(975, 233), new Point(1068, 233), new Point(1161, 233), new Point(1254, 233),
